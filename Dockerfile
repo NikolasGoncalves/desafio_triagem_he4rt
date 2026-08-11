@@ -42,7 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
         git \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" \
+    && docker-php-ext-install \
         pdo_pgsql \
         pgsql \
         intl \
