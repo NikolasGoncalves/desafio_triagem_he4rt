@@ -1,10 +1,9 @@
 # ---- Etapa 1: dependências PHP ----
+dockerfile
 FROM composer:2 AS vendor
-
 WORKDIR /app
-
 COPY composer.json composer.lock ./
-
+COPY app-modules ./app-modules
 RUN composer install \
     --no-dev \
     --no-scripts \
