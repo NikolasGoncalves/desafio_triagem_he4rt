@@ -9,7 +9,6 @@
     <title>{{ $title ? $title . ' - ' : '' }}{{ config('app.name') }}</title>
     @vite (['app-modules/he4rt/resources/css/theme.css'])
     @fluxAppearance
-    @fluxStyles
 </head>
 <body class="min-h-screen antialiased">
     <x-portal::navbar />
