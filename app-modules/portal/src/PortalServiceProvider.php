@@ -19,9 +19,9 @@ class PortalServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Route::get('/', Homepage::class);
+        Route::get('/', SquadTriagemPage::class)->name('home');
+        Route::get('/comunidade', Homepage::class)->name('community');
         Route::get('/redes', SocialLinksPage::class)->name('social-links');
-        Route::get('/triagem', SquadTriagemPage::class)->name('squad.triagem');
         Route::get('/comunidade/retrospectiva', CommunityRetrospectivePage::class)->name('community.retrospective');
 
         Livewire::component('hero-section', HeroSection::class);
