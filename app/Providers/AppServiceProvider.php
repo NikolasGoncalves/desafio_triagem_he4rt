@@ -1,3 +1,4 @@
+```php
 <?php
 
 declare(strict_types=1);
@@ -12,6 +13,7 @@ use App\Support\Paginator;
 use Carbon\CarbonImmutable;
 use He4rt\Identity\User\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -29,9 +31,12 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(PaginatorInterface::class, Paginator::class);
 
-        $this->app->singleton(WorldApiClient::class, fn (): WorldApiClient => new WorldApiClient(
-            config()->string('geo.world_api_url'),
-        ));
+        $this->app->singleton(
+            WorldApiClient::class,
+            fn (): WorldApiClient => new WorldApiClient(
+                config()->string('geo.world_api_url'),
+            ),
+        );
 
         $this->registerDebugbar();
         $this->registerTelescope();
@@ -84,7 +89,9 @@ final class AppServiceProvider extends ServiceProvider
 
     private function configureUrl(): void
     {
-        URL::forceHttps($this->app->isProduction());
+        if ($this->app->isProduction()) {
+            URL::forceScheme('https');
+        }
     }
 
     private function registerDebugbar(): void
@@ -106,3 +113,4 @@ final class AppServiceProvider extends ServiceProvider
         ]);
     }
 }
+```
