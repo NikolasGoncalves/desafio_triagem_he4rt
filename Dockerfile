@@ -5,6 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 COPY . .
 RUN npm install --ignore-scripts
+RUN npx vite build
 
 # ---- Etapa 2: imagem de runtime (PHP + Composer) ----
 FROM php:8.5-cli-bookworm AS app
