@@ -30,7 +30,7 @@ RUN npx vite build
 
 
 # ---- Etapa 3: imagem de runtime (PHP + Composer) ----
-FROM php:8.5-cli-bookworm AS app
+FROM php:8.4-cli-bookworm AS app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libpq-dev \
