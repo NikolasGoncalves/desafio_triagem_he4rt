@@ -1,53 +1,20 @@
-
-WORKDIR /app
-
-COPY composer.json composer.lock ./
-
-RUN composer install \
-    --no-dev \
-    --no-scripts \
-    --no-interaction \
-    --prefer-dist
-
-
-# ---- Etapa 2: build dos assets (Vite/Tailwind) ----
+# ---- Etapa 1: build dos assets (Vite/Tailwind) ----
 FROM node:24-bookworm-slim AS frontend
-
 WORKDIR /app
-
 COPY package.json package-lock.json ./
-
 RUN npm ci --ignore-scripts
-
 COPY . .
+RUN npm install --ignore-scripts
+RUN npx vite build --debug
 
-# O Vite precisa das dependências do Composer/Filament
-COPY --from=vendor /app/vendor ./vendor
-
-RUN npx vite build
-
-
-# ---- Etapa 3: imagem de runtime (PHP) ----
+# ---- Etapa 2: imagem de runtime (PHP + Composer) ----
 FROM php:8.5-cli-bookworm AS app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        libpq-dev \
-        libicu-dev \
-        libpng-dev \
-        libjpeg62-turbo-dev \
-        libfreetype6-dev \
-        libzip-dev \
-        unzip \
-        git \
+        libpq-dev libicu-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev libzip-dev \
+        unzip git \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" \
-        pdo_pgsql \
-        pgsql \
-        intl \
-        gd \
-        bcmath \
-        zip \
-        opcache \
+    && docker-php-ext-install -j"$(nproc)" pdo_pgsql pgsql intl gd bcmath zip opcache \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -55,11 +22,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 COPY composer.json composer.lock ./
-
-COPY --from=vendor /app/vendor ./vendor
+RUN composer install --no-dev --no-scripts --no-interaction --prefer-dist
 
 COPY . .
-
 COPY --from=frontend /app/public/build ./public/build
 
 RUN composer dump-autoload --optimize \
@@ -68,11 +33,8 @@ RUN composer dump-autoload --optimize \
     && chmod -R 775 storage bootstrap/cache
 
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 USER www-data
-
 EXPOSE 10000
-
 ENTRYPOINT ["entrypoint.sh"]
