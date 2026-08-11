@@ -26,7 +26,7 @@ COPY . .
 # O Vite/Tailwind precisa dos arquivos do Filament
 COPY --from=vendor /app/vendor ./vendor
 
-RUN npx vite build
+RUN npm run build
 
 
 # ---- Etapa 3: imagem de runtime (PHP + Composer) ----
