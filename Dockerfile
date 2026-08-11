@@ -9,7 +9,8 @@ RUN composer install \
     --no-dev \
     --no-scripts \
     --no-interaction \
-    --prefer-dist
+    --prefer-dist \
+    --ignore-platform-reqs
 
 
 # ---- Etapa 2: build dos assets (Vite/Tailwind) ----
