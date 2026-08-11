@@ -2,9 +2,6 @@
 
 Documentação da feature **Triagem dos Squads** — o formulário multi-etapas que serve como porta de entrada de novos membros para os Squads da comunidade He4rt Developers.
 
-> Este README documenta especificamente essa página/feature (não o monorepo inteiro). Ele foi escrito com base no código real do módulo `portal` em [`nikolasgds/desafio_triagem_he4rt`](https://github.com/nikolasgds/desafio_triagem_he4rt).
-> Sugestão de local: `app-modules/portal/README.md`.
-
 ## Onde fica no código
 
 | O quê | Arquivo |
