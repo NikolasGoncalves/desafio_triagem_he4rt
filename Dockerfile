@@ -1,4 +1,4 @@
-
+FROM node:24-bookworm-slim AS frontend
 WORKDIR /app
 
 COPY composer.json composer.lock ./
