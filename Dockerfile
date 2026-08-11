@@ -1,8 +1,8 @@
 # ---- Etapa 1: build dos assets (Vite/Tailwind) ----
-FROM node:24-alpine AS frontend
+FROM node:24-bookworm-slim AS frontend
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
