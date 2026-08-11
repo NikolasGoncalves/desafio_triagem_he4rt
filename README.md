@@ -46,10 +46,6 @@ Quando `submitted === true`, a view troca o formulário pelo componente `<x-port
 - Decide a mensagem do "próximo passo" com base em `precisaOnboardingGit` (`true` quando `gitExperiencia !== 'diaadia'`), sugerindo preparar o ambiente antes do desafio de Git ou já partir direto para ele.
 - Oferece um botão para refazer a triagem, que chama `resetForm()` (reseta todas as public properties do componente).
 
-## Ponto de atenção: persistência
-
-No estado atual do código, **os dados da triagem não são salvos em banco**. `SquadTriagemPage` mantém tudo como *public properties* do componente Livewire e, ao final, apenas seta `$submitted = true` — não há `Model`, `migration` ou chamada de `save()`/dispatch de evento associada a essa feature. Isso é relevante caso o objetivo seja usar essas respostas para triagem real (hoje elas se perdem ao fim da sessão/reload).
-
 ## Componentes Blade reutilizados
 
 - `x-portal::triagem.field` — wrapper de label + hint + slot + erro (usa `role="alert"` na mensagem de erro).
