@@ -57,10 +57,6 @@ Quando `submitted === true`, a view troca o formulário pelo componente `<x-port
 
 Todos usam os componentes de design system do próprio projeto (`x-he4rt::button`, `x-he4rt::heading`, `x-he4rt::text`, `x-he4rt::headline`) e inputs do **Flux UI** (`flux:input`, `flux:select`, `flux:radio.group`).
 
-## Testes
-
-Os demais recursos do módulo `portal` têm testes de feature em `app-modules/portal/tests/Feature/` (ex.: `HomepageTest.php`, `SocialLinksPageTest.php`). **Não há, hoje, um `SquadTriagemPageTest`** cobrindo o fluxo de triagem — vale considerar ao trabalhar nessa feature, especialmente para cobrir: validação por etapa, `toggle()`, navegação entre passos e o cálculo de `resumo()`/`precisaOnboardingGit`.
-
 ## Rodando localmente
 
 Segue o fluxo padrão do monorepo (via `Makefile`, na raiz do projeto):
